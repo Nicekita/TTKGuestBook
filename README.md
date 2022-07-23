@@ -12,7 +12,7 @@ npm install
 composer install
 ```
 4) Создайте файл .env и скопируйте туда значения .env.example
-5) В файле .env укажите абсолютный путь к файлу SQLite
+5) В файле .env укажите абсолютный путь к файлу SQLite (%app%/resources/db.SQLite)
 6) Запустите приложение:
 ```
 php artisan serve

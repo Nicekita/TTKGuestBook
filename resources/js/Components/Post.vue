@@ -40,8 +40,5 @@ function deletePost($postid){
   <div class="flex justify-end mt-4">
     <a href="#" class="text-xl font-medium text-indigo-500">{{timedate}}</a>
   </div>
-  <template  v-if="$page.props.auth.user">
-    <button class= "p-1 rounded-lg float-right bg-gray-800 text-white" v-if="$page.props.auth.user.id==user_id">Y</button>
-    </template>
 </div>
 </template>
