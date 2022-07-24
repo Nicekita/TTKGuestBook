@@ -24,6 +24,7 @@ function deletePost($postid){
 
 </script>
 <template>
+<div>
 <ModalWindow v-if="show" @close="closeModal">
 <template #modalBody>
 <ModalWindowDelete @confirm="deletePost(post_id)"/>
@@ -32,7 +33,7 @@ function deletePost($postid){
         <div class="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-20">
   <div>
     <template  v-if="$page.props.auth.user">
-    <button class= "p-1 rounded-lg float-right bg-gray-800 text-white" @click="showModal" v-if="$page.props.auth.user.is_admin">X</button>
+    <button class= "p-1 rounded-lg float-right bg-gray-800 text-white" @click="showModal" v-if="$page.props.auth.user.is_admin||$page.props.auth.user.id==user_id">X</button>
     </template>
     <h2 class="text-gray-800 text-3xl font-semibold">{{username}}</h2>
     <p class="mt-2 text-gray-600">{{text}}</p>
@@ -40,5 +41,6 @@ function deletePost($postid){
   <div class="flex justify-end mt-4">
     <a href="#" class="text-xl font-medium text-indigo-500">{{timedate}}</a>
   </div>
+</div>
 </div>
 </template>

@@ -1,4 +1,5 @@
 <script setup>
+
 import BreezeButton from '@/Components/Button.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
@@ -11,18 +12,26 @@ const form = useForm({
     password: '',
     remember: false
 });
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => {form.reset('password')
-        },
-    });
-};
+
+
+</script>
+<script>
+export default {
+    methods: {
+        submit(){
+    this.form.post(route('login'), {
+        onFinish: () => {this.form.reset('password')},
+        onSuccess: (data) => {
+            this.$emit('close')
+        }
+         })
+        }
+        }
+
+}
 </script>
 <template>
     <form @submit.prevent="submit"> 
-        <div v-if="error" class="mb-4 font-medium text-sm text-green-600">
-            {{ error }}
-        </div>
     <div class="">
         <BreezeLabel for="email">Your email</BreezeLabel>
         <BreezeInput type="email" id="email" v-model="form.email"  placeholder="name@flowbite.com" required />
@@ -36,8 +45,7 @@ const submit = () => {
         <BreezeCheckbox id="remember" type="checkbox" value="" v-model="form.remember"  required />
         </div>
         <BreezeLabel for="remember" >Remember me</BreezeLabel>
-    </div>
-        
+    </div>     
     <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" >Submit</BreezeButton>
     </form>
 </template>

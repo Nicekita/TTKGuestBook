@@ -13,11 +13,21 @@ const form = useForm({
     terms: false,
 });
 
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
-};
+</script>
+<script>
+export default {
+    methods: {
+        submit(){
+    this.form.post(route('register'), {
+        onFinish: () => this.form.reset('password', 'password_confirmation'),
+        onSuccess: (data) => {
+            this.$emit('close')
+        }
+         })
+        }
+        }
+
+}
 </script>
 <template>
 <form @submit.prevent="submit">

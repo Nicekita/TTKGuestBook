@@ -54,7 +54,7 @@ class PostController extends Controller
     {
         $post = Post::find($request->route('id'));
         if (Auth::check()){
-            if (Auth::user()->is_admin||Auth::id==$post->user_id) 
+            if (Auth::user()->is_admin||Auth::id()==$post->user_id) 
             $post->delete();
         }        
         return;
