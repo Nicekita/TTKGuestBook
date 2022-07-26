@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth')->group(function(){
     Route::post('updatepost',[PostController::class,'update'])->name('updateauthorpost');
 });
-    Route::post('post',[PostController::class,'store'])->name('addauthorpost');
-    Route::get('posts',[PostController::class,'paginatePosts'])->name('getallposts');
-    Route::delete('post/{id}',[PostController::class,'deletePost'])->name('deleteauthorpost');
-    Route::post('post/{id}',[PostController::class,'updatePost'])->name('updateauthorpost');
+Route::post('post',[PostController::class,'store'])->name('addauthorpost');
+Route::get('posts',[PostController::class,'paginatePosts'])->name('getallposts');
+Route::delete('post/{id}',[PostController::class,'deletePost'])->name('deleteauthorpost');
+Route::post('post/{id}',[PostController::class,'updatePost'])->name('updateauthorpost');

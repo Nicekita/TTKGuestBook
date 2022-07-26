@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Models\Post;
 use App\Models\User;
+use App\Events\PostUpdate;
 class PostController extends Controller
 {
     
@@ -26,8 +27,10 @@ class PostController extends Controller
         $post->user_id=Auth::id();
         }
         $post->save();
+        broadcast(new PostUpdate());
         return redirect()->intended(RouteServiceProvider::HOME);;
     }
+
     public function paginatePosts(){
         $paginated=Post::paginate(9);
         $paginated->getCollection()->transform(function($post){
@@ -39,15 +42,23 @@ class PostController extends Controller
         });
         return response()->json($paginated);
     }
+
+
     public function viewPost(Request $request){
         return Post::find($request->id);
     }
+
     public function updatePost(Request $request)
     {
+        $post = Post::find($request->route('id'));
         $validated = $request->validate([
             'text' => 'required|max:255',
         ]);
-        Post::find($request->id)->update(['text'=>$request->text]).save();
+        if (Auth::check()){
+            if (Auth::user()->is_admin||Auth::id()==$post->user_id) 
+            $post->update(['text'=>$request->text]).save();
+            broadcast(new PostUpdate());
+        }     
         return redirect()->intended(RouteServiceProvider::HOME);
     }
     public function deletePost(Request $request)
@@ -56,6 +67,7 @@ class PostController extends Controller
         if (Auth::check()){
             if (Auth::user()->is_admin||Auth::id()==$post->user_id) 
             $post->delete();
+            broadcast(new PostUpdate());
         }        
         return;
     }

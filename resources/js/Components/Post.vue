@@ -1,9 +1,9 @@
 <script setup>
-import ModalWindowDelete from './Modal/ModalWindowDelete.vue';
 import ModalWindow from './Modal/ModalWindow.vue';
 import { ref } from 'vue';
 import axios from 'axios';
 const show = ref(false);
+const ModalType=ref('');
 const props = defineProps({
     text: String,
     username: String,
@@ -14,26 +14,23 @@ const props = defineProps({
 function closeModal(){
     show.value=false;
 }
-function showModal(){
-   show.value=true;
+function showModal(modalType){
+    ModalType.value=modalType
+    show.value=true;
 }
-function deletePost($postid){
-      axios.delete(route('deleteauthorpost',$postid));
+function deletePost(){
+      axios.delete(route('deleteauthorpost',props.post_id));
       closeModal();
 }
-
 </script>
 <template>
 <div>
-<ModalWindow v-if="show" @close="closeModal">
-<template #modalBody>
-<ModalWindowDelete @confirm="deletePost(post_id)"/>
-</template>
+<ModalWindow v-if="show" :modalType="ModalType" @close="closeModal" @success="deletePost">
 </ModalWindow>
         <div class="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-20">
   <div>
     <template  v-if="$page.props.auth.user">
-    <button class= "p-1 rounded-lg float-right bg-gray-800 text-white" @click="showModal" v-if="$page.props.auth.user.is_admin||$page.props.auth.user.id==user_id">X</button>
+    <button class= "p-1 rounded-lg float-right bg-gray-800 text-white" @click="showModal('ModalWindowDelete')"  v-if="$page.props.auth.user.is_admin||$page.props.auth.user.id==user_id">X</button>
     </template>
     <h2 class="text-gray-800 text-3xl font-semibold">{{username}}</h2>
     <p class="mt-2 text-gray-600">{{text}}</p>

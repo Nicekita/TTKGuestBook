@@ -7,9 +7,11 @@ export default {
       currentPage:1
     }
   },
-  
     mounted(){
-            setInterval(() => this.list(this.currentPage), 2000)
+        this.list(this.currentPage)
+        window.Echo.channel('posts').listen('PostUpdate', e =>{
+            this.list(this.currentPage)
+        })
             
     },
     methods:{
@@ -20,11 +22,8 @@ export default {
     this.currentPage=page;
             })
         }
-    }
-    
+    }   
 }
-  
-    
 </script>
 <script setup>
 import pagination from 'laravel-vue-pagination'
@@ -33,12 +32,14 @@ import Post from '@/Components/Post.vue'
 
 
 </script>
+
 <template>
 <div class="container mx-auto grid grid-cols-3">
     <Post class="grow" v-for="post in posts" :text="post.text" :username=post.username :user_id=post.user_id :post_id=post.id > </Post>
 </div> 
 <pagination class="bg-gray-800 fixed bottom-0 w-full justify-around flex flex-row" align="center" :data="response" @pagination-change-page="list"></pagination>
 </template>
+
 <style>
 .page-item{
     border:1px solid gray;
