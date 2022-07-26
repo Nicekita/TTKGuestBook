@@ -56,7 +56,7 @@ class PostController extends Controller
         ]);
         if (Auth::check()){
             if (Auth::user()->is_admin||Auth::id()==$post->user_id) 
-            $post->update(['text'=>$request->text]).save();
+            $post->update(['text'=>$request->text]);
             broadcast(new PostUpdate());
         }     
         return redirect()->intended(RouteServiceProvider::HOME);

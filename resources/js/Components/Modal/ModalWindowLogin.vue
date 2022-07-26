@@ -31,10 +31,13 @@ export default {
 }
 </script>
 <template>
-    <form @submit.prevent="submit"> 
-    <div class="">
+<div class="container flex flex-col">
+<BreezeValidationErrors class="shrink" />
+    <form @submit.prevent="submit" > 
+    <div class="container">
+    <div class="mb-6">
         <BreezeLabel for="email">Your email</BreezeLabel>
-        <BreezeInput type="email" id="email" v-model="form.email"  placeholder="name@flowbite.com" required />
+        <BreezeInput type="email" id="email" v-model="form.email"  placeholder="name@ttk.com" required />
     </div>
     <div class="mb-6">
         <BreezeLabel for="password" >Your password</BreezeLabel>
@@ -47,5 +50,7 @@ export default {
         <BreezeLabel for="remember" >Remember me</BreezeLabel>
     </div>     
     <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" >Submit</BreezeButton>
+    </div>
     </form>
+</div>
 </template>
